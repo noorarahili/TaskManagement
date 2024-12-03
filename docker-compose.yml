@@ -1,0 +1,52 @@
+version: '3.9'
+
+services:
+  # Django Backend Service
+  backend:
+    build:
+      context: ./backend
+    container_name: django_backend
+    volumes:
+      - ./backend:/usr/src/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=TaskManager.settings
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  # React Frontendss Service
+  frontend:
+    build:
+      context: ./frontend
+    container_name: react_frontend
+    volumes:
+      - ./frontend:/usr/src/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  # PostgreSQL Database Service
+  db:
+    image: postgres:13
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: task_manager
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
