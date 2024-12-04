@@ -20,6 +20,7 @@ This application is a **Task Management System** built using **Django** for the 
   - The entire application (backend, frontend, and database) is containerized using **Docker**.
   - Use **docker-compose** for managing the multi-container application (frontend, backend, PostgreSQL).
 
+
 ---
 
 ## Technologies Used
